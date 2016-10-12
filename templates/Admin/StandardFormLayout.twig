@@ -1,0 +1,38 @@
+{% if "1" == submission %}
+<div id="message" class="updated fade">
+	<p>
+		{{ msg.success }}
+	</p>
+</div>
+{% endif %}
+{% if "0" == submission %}
+<div id="message" class="error fade">
+	<p>
+		{{ msg.error }}
+	</p>
+</div>
+{% endif %}
+
+<p>
+	<strong>{{ blurb }}</strong>
+</p>
+
+<form action="{{ action }}" method="POST">
+	<table class="widefat">
+	{% for id,field in form %}
+		<tr>
+			<td>
+				<label for="{{ id }}">{{ field.name }}</label>
+			</td>
+			<td>
+				<input class="widefat" id="{{ id }}" name="field[{{ id }}]" type="text" value="{{ field.value }}" />
+			</td>
+		</tr>
+	{% endfor %}
+		<tr>
+			<td colspan="2" align="right">
+				<input class="button-primary" type="submit" />
+			</td>
+		</tr>
+	</table>
+</form>
