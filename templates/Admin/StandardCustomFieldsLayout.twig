@@ -1,0 +1,18 @@
+{% if blurb %}
+<p>
+	<strong>{{ blurb }}</strong>
+</p>
+{% endif %}
+
+<table class="widefat">
+{% for id,field in form %}
+	<tr>
+		<td>
+			<label for="{{ id }}">{{ field.name }}</label>
+		</td>
+		<td>
+			<input class="widefat" id="{{ id }}" name="custom_field[{{ id }}]" type="text" value="{{ field.value }}" />
+		</td>
+	</tr>
+{% endfor %}
+</table>
