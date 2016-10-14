@@ -10,6 +10,16 @@ abstract class Tools
 		return ( version_compare( WP_VERSION, $version, "<" ) && function_exists( "add_action" ) );
 	}
 
+	public static function getPostPart( $post, $part = "" )
+	{
+		$the_post = get_post( $post );
+
+		if ( !is_null( $the_post ) && !empty( $part ) )
+			return $the_post->{$part};
+
+		return $the_post;
+	}
+
 	public static function getMenuByLocation( $location, $key = "name" )
 	{
 		$locations = get_nav_menu_locations( );
