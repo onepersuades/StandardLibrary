@@ -11,7 +11,11 @@
 			<label for="{{ id }}">{{ field.name }}</label>
 		</td>
 		<td>
+			{% if field.value is defined %}
 			<input class="widefat" id="{{ id }}" name="custom_field[{{ id }}]" type="text" value="{{ field.value }}" />
+			{% elseif field.checked is defined %}
+			<input class="widefat" id="{{ id }}" name="custom_field[{{ id }}]" type="checkbox" value="1" {% if field.checked %}checked="checked"{% endif %} />
+			{% endif %}
 		</td>
 	</tr>
 {% endfor %}
