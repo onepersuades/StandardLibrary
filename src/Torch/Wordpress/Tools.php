@@ -9,5 +9,21 @@ abstract class Tools
 	{
 		return ( version_compare( WP_VERSION, $version, "<" ) && function_exists( "add_action" ) );
 	}
+
+	public static function getMenuByLocation( $location, $key = "name" )
+	{
+		$locations = get_nav_menu_locations( );
+		if ( empty( $location ) && array_key_exists( $location, $locations ) )
+		{
+			$menu = get_term( $locations[$location], "nav_menu" );
+
+			if ( !empty( $key ) )
+				return $menu->{$key};
+
+			return $menu;
+		}
+
+		return null;
+	}
 }
 endif;
