@@ -31,8 +31,9 @@
 			{% elseif field.values is defined and field.selected is defined %}
 			<td>
 				<select class="widefat" id="{{ id }}" name="field[{{ id }}]">
+					<option></option>
 					{% for key,value in field.values %}
-					<option name="{{ attribute( value, field.id_field ) }}">{{ attribute( value, field.text_field ) }}</option>
+					<option name="{{ attribute( value, field.id_field ) }}" {% if field.selected == attribute( value, field.id_field ) %}selected="selected"{% endif %}>{{ attribute( value, field.text_field ) }}</option>
 					{% endfor %}
 				</select>
 			</td>
