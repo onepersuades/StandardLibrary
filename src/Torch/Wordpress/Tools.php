@@ -10,12 +10,22 @@ abstract class Tools
 		return ( version_compare( WP_VERSION, $version, "<" ) && function_exists( "add_action" ) );
 	}
 
-	public static function getPostPart( $post, $part = "" )
+	public static function getBlogArchiveURL( )
+	{
+		return get_permalink( get_option( "page_for_posts" ) );
+	}
+
+	public static function getPostPart( $post, $part = "", $display = false )
 	{
 		$the_post = get_post( $post );
 
 		if ( !is_null( $the_post ) && !empty( $part ) )
+		{
+			if ( $display )
+				return apply_filters( "the_content", $the_post->{$part} );
+
 			return $the_post->{$part};
+		}
 
 		return $the_post;
 	}
