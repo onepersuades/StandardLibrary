@@ -24,9 +24,19 @@
 			<td>
 				<label for="{{ id }}">{{ field.name }}</label>
 			</td>
+			{% if field.value is defined %}
 			<td>
 				<input class="widefat" id="{{ id }}" name="field[{{ id }}]" type="text" value="{{ field.value }}" />
 			</td>
+			{% elseif field.values is defined and field.selected is defined %}
+			<td>
+				<select class="widefat" id="{{ id }}" name="field[{{ id }}]">
+					{% for key,value in field.values %}
+					<option name="{{ attribute( value, field.id_field ) }}">{{ attribute( value, field.text_field ) }}</option>
+					{% endfor %}
+				</select>
+			</td>
+			{% endif %}
 		</tr>
 	{% endfor %}
 		<tr>
