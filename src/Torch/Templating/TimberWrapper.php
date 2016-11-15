@@ -17,6 +17,11 @@ class TimberWrapper implements Renderer
 			new AdminNotice( sprintf( __( "The \"%sTimber Library%s\" plugin is required for this custom WordPress Theme to function properly." ), "<a href=\"https://en-ca.wordpress.org/plugins/timber-library/installation/\" target=\"_blank\">", "</a>" ), "error", true );
 	}
 
+	public function updateContext( $new_context )
+	{
+		$this->context = $new_context;
+	}
+
 	public function render( $template, $variables, $return = false )
 	{
 		$return = "";

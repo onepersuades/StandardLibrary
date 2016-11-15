@@ -6,6 +6,7 @@ interface Renderer
 {
 	
 	public function __construct( $context );
+	public function updateContext( $new_context );
 	public function render( $template, $variables, $return = false );
 }
 endif;

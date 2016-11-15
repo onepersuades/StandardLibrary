@@ -34,6 +34,11 @@ class LiquidWrapper implements Renderer
 		}
 	}
 
+	public function updateContext( $new_context )
+	{
+		$this->context = $new_context;
+	}
+
 	public function render( $template, $variables, $return = false )
 	{
 		$return = "";

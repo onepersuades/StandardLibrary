@@ -32,6 +32,15 @@ class TwigWrapper implements Renderer
 		}
 	}
 
+	public function updateContext( $new_context )
+	{
+		if ( class_exists( "Twig_Environment" ) )
+		{
+			$thie->context = $new_context;
+			$this->environment->getLoader( )->setPaths( $new_context );
+		}
+	}
+
 	public function render( $template, $variables, $return = false )
 	{
 		$return = "";
