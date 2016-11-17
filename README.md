@@ -2,7 +2,7 @@
 
 A Library of Common Constants, Classes, and Functions, and reusable shortcuts for PHP project - including Wordpress-related projects.
 
-- ** Templating **
+- **Templating**
 	- Consistent support for, with graceful failure:
 		- Twig
 		- Timber (Wordpress Plugin)
@@ -10,9 +10,9 @@ A Library of Common Constants, Classes, and Functions, and reusable shortcuts fo
 		- Classic PHP
 	- Some generic templates for Wordpress Admin Panels
 
-- ** Traits **
+- **Traits**
 	- `Friendly` Trait to make Friend classes functionality available for public and protected functions
 
-- ** Wordpress **
+- **Wordpress**
 	- An `AdminNotice` classes to simplify creating UI admin notices for the Wordpress Admin Panel
 	- A `Tools` class to group helpers and other reusable functionality
