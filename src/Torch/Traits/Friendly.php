@@ -24,10 +24,10 @@ trait Friendly
 		return false;
 	}
 
-	private static function isLastFriendClass( $class, $item = 2 )
+	private static function isCallFromFriendClass( $depth = 2 )
 	{
 		$trace = debug_backtrace( );
-		return self::isFriendClass( $trace[$item]["class"] );
+		return self::isFriendClass( $trace[$depth]["class"] );
 	}
 }
 endif;
