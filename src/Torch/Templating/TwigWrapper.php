@@ -43,19 +43,13 @@ class TwigWrapper implements Renderer
 
 	public function render( $template, $variables, $return = false )
 	{
+		$func = "display";
+		if ( $return )
+			$func = "render";
+
 		$return = "";
-
-		if ( $return )
-			ob_start( );
-
 		if ( !is_null( $this->environment ) )
-			$this->environment->display( $template.".twig", $variables );
-		
-		if ( $return )
-		{
-			$return = ob_get_contents( );
-			ob_end_clean( );
-		}
+			$return = $this->environment->{$func}( $template.".twig", $variables );
 
 		return $return;
 	}
