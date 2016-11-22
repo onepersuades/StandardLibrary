@@ -12,6 +12,7 @@ A Library of Common Constants, Classes, and Functions, and reusable shortcuts fo
 
 - **Traits**
 	- `Friendly` Trait to make Friend classes functionality available for public and protected functions
+	- `Unwindable` Trait to unwind arrays on particular keys
 
 - **Wordpress**
 	- An `AdminNotice` classes to simplify creating UI admin notices for the Wordpress Admin Panel
