@@ -16,6 +16,22 @@ trait Friendly
 		return true;
 	}
 
+	private static function removeFriendClasses( $classes = array( ) )
+	{
+		if ( is_string( $classes ) )
+			$classes = array( $classes );
+
+		foreach ( $classes as $class )
+		{
+			$index = array_search( $class, self::$__friends );
+
+			if ( FALSE !== $index )
+				unset( self::$__friends[$index] );
+		}
+
+		return true;
+	}
+
 	private static function isFriendClass( $class )
 	{
 		if ( in_array( $class, self::$__friends ) )
