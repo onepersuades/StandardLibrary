@@ -12,7 +12,15 @@
 		</td>
 		<td>
 			{% if field.value is defined %}
+			{% if field.longtext is defined %}
+			<textarea class="widefat" id="{{ id }}" name="custom_field[{{ id }}]">{{ field.value }}</textarea>
+			{% else %}
+			{% if field.type is defined %}
+			<input class="widefat" id="{{ id }}" name="custom_field[{{ id }}]" type="{{ field.type }}" value="{{ field.value }}" />
+			{% else %}
 			<input class="widefat" id="{{ id }}" name="custom_field[{{ id }}]" type="text" value="{{ field.value }}" />
+			{% endif %}
+			{% endif %}
 			{% elseif field.checked is defined %}
 			<input class="widefat" id="{{ id }}" name="custom_field[{{ id }}]" type="checkbox" value="1" {% if field.checked %}checked="checked"{% endif %} />
 			{% endif %}
