@@ -34,7 +34,7 @@
 					<a class="remove-custom-img" data-field="{{ id }}" href="#">Remove {{ field.type | capitalize }}</a>
 				</p>
 			</td>
-			{% elsif field.type is defined %}
+			{% elseif field.type is defined %}
 			<input class="widefat" id="{{ id }}" name="custom_field[{{ id }}]" type="{{ field.type }}" value="{{ field.value }}" />
 			{% else %}
 			<input class="widefat" id="{{ id }}" name="custom_field[{{ id }}]" type="text" value="{{ field.value }}" />
