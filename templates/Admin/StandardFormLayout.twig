@@ -1,3 +1,5 @@
+{% set has_media = "false" %}
+
 {% if "1" == submission %}
 <div id="message" class="updated fade">
 	<p>
@@ -24,11 +26,7 @@
 			<td>
 				<label for="{{ id }}">{{ field.name }}</label>
 			</td>
-			{% if field.value is defined %}
-			<td>
-				<input class="widefat" id="{{ id }}" name="field[{{ id }}]" type="text" value="{{ field.value }}" />
-			</td>
-			{% elseif field.values is defined and field.selected is defined %}
+			{% if field.values is defined and field.selected is defined %}
 			<td>
 				<select class="widefat" id="{{ id }}" name="field[{{ id }}]">
 					<option></option>
@@ -36,6 +34,31 @@
 					<option value="{{ attribute( value, field.id_field ) }}" {% if field.selected == attribute( value, field.id_field ) %}selected="selected"{% endif %}>{{ attribute( value, field.text_field ) }}</option>
 					{% endfor %}
 				</select>
+			</td>
+			{% elseif field.media is defined %}
+			{% set has_media = "true" %}
+			<td>
+				<p>
+					{% if field.type == "video" %}
+					<video data-media-id="{{ id }}" src="{{ field.value }}" controls style="width:100%;" />
+					{% else %}
+					<img data-media-id="{{ id }}" src="{{ field.value }}" style="width:100%;" />
+					{% endif %}
+					<input class="widefat" id="{{ id }}" name="field[{{ id }}]" type="hidden" value="{{ field.value }}" />
+				</p>
+
+				<p class="hide-if-no-js">
+					<a class="upload-custom-img" data-field="{{ id }}" data-type="{{ field.type }}" href="#">Upload {{ field.type | capitalize }}</a> |
+					<a class="remove-custom-img" data-field="{{ id }}" href="#">Remove {{ field.type | capitalize }}</a>
+				</p>
+			</td>
+			{% elseif field.longtext is defined %}
+			<td>
+				<textarea class="widefat" id="{{ id }}" name="field[{{ id }}]">{{ field.value }}</textarea>
+			</td>
+			{% else %}
+			<td>
+				<input class="widefat" id="{{ id }}" name="field[{{ id }}]" type="text" value="{{ field.value }}" />
 			</td>
 			{% endif %}
 		</tr>
@@ -47,3 +70,53 @@
 		</tr>
 	</table>
 </form>
+
+{% if has_media == "true" %}
+<script type="text/javascript">
+	( function( $ ) {
+		$( ".upload-custom-img" )
+			.on( "click", function( ) {
+				var data = $( this ).data( );
+					frame = new wp.media.view.MediaFrame.Select( {
+						title: "Select "+data.type,
+						multiple: false,
+						library: {
+							order: "DESC",
+							orderby: "modified",
+							type: data.type,
+							search: null,
+							uploadedTo: null
+						},
+						button: {
+							text: "Set "+data.type
+						}
+					} );
+
+				frame
+					.on( "select", function( ) {
+						var selection = frame.state( ).get( "selection" ).first( ),
+							url = selection.get( "url" );
+
+						$( '#'+data.field )
+							.val( url );
+
+						$( "[data-media-id="+data.field+"]" )
+							.attr( "src", url );
+					} );
+
+				frame.open( );
+			} );
+
+		$( ".remove-custom-img" )
+			.on( "click", function( ) {
+				var data = $( this ).data( );
+
+				$( '#'+data.field )
+					.val( "" );
+
+				$( "[data-media-id="+data.field+"]" )
+					.attr( "src", "" );
+			} );
+	} )( jQuery );
+</script>
+{% endif %}

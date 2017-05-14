@@ -1,3 +1,5 @@
+{% set has_media = "false" %}
+
 {% if blurb %}
 <p>
 	<strong>{{ blurb }}</strong>
@@ -15,7 +17,24 @@
 			{% if field.longtext is defined %}
 			<textarea class="widefat" id="{{ id }}" name="custom_field[{{ id }}]">{{ field.value }}</textarea>
 			{% else %}
-			{% if field.type is defined %}
+			{% if field.media is defined %}
+			{% set has_media = "true" %}
+			<td>
+				<p>
+					{% if field.type == "video" %}
+					<video data-media-id="{{ id }}" src="{{ field.value }}" controls style="width:100%;" />
+					{% else %}
+					<img data-media-id="{{ id }}" src="{{ field.value }}" style="width:100%;" />
+					{% endif %}
+					<input class="widefat" id="{{ id }}" name="custom_field[{{ id }}]" type="hidden" value="{{ field.value }}" />
+				</p>
+
+				<p class="hide-if-no-js">
+					<a class="upload-custom-img" data-field="{{ id }}" data-type="{{ field.type }}" href="#">Upload {{ field.type | capitalize }}</a> |
+					<a class="remove-custom-img" data-field="{{ id }}" href="#">Remove {{ field.type | capitalize }}</a>
+				</p>
+			</td>
+			{% elsif field.type is defined %}
 			<input class="widefat" id="{{ id }}" name="custom_field[{{ id }}]" type="{{ field.type }}" value="{{ field.value }}" />
 			{% else %}
 			<input class="widefat" id="{{ id }}" name="custom_field[{{ id }}]" type="text" value="{{ field.value }}" />
@@ -28,3 +47,53 @@
 	</tr>
 {% endfor %}
 </table>
+
+{% if has_media == "true" %}
+<script type="text/javascript">
+	( function( $ ) {
+		$( ".upload-custom-img" )
+			.on( "click", function( ) {
+				var data = $( this ).data( );
+					frame = new wp.media.view.MediaFrame.Select( {
+						title: "Select "+data.type,
+						multiple: false,
+						library: {
+							order: "DESC",
+							orderby: "modified",
+							type: data.type,
+							search: null,
+							uploadedTo: null
+						},
+						button: {
+							text: "Set "+data.type
+						}
+					} );
+
+				frame
+					.on( "select", function( ) {
+						var selection = frame.state( ).get( "selection" ).first( ),
+							url = selection.get( "url" );
+
+						$( '#'+data.field )
+							.val( url );
+
+						$( "[data-media-id="+data.field+"]" )
+							.attr( "src", url );
+					} );
+
+				frame.open( );
+			} );
+
+		$( ".remove-custom-img" )
+			.on( "click", function( ) {
+				var data = $( this ).data( );
+
+				$( '#'+data.field )
+					.val( "" );
+
+				$( "[data-media-id="+data.field+"]" )
+					.attr( "src", "" );
+			} );
+	} )( jQuery );
+</script>
+{% endif %}
