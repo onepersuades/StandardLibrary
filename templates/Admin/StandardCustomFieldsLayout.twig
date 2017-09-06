@@ -19,21 +19,19 @@
 			{% else %}
 			{% if field.media is defined %}
 			{% set has_media = "true" %}
-			<td>
-				<p>
-					{% if field.type == "video" %}
-					<video data-media-id="{{ id }}" src="{{ field.value }}" controls style="width:100%;" />
-					{% else %}
-					<img data-media-id="{{ id }}" src="{{ field.value }}" style="width:100%;" />
-					{% endif %}
-					<input class="widefat" id="{{ id }}" name="custom_field[{{ id }}]" type="hidden" value="{{ field.value }}" />
-				</p>
+			<p>
+				{% if field.type == "video" %}
+				<video data-media-id="{{ id }}" src="{{ field.value }}" controls style="width:100%;" />
+				{% else %}
+				<img data-media-id="{{ id }}" src="{{ field.value }}" style="width:100%;" />
+				{% endif %}
+				<input class="widefat" id="{{ id }}" name="custom_field[{{ id }}]" type="hidden" value="{{ field.value }}" />
+			</p>
 
-				<p class="hide-if-no-js">
-					<a class="upload-custom-img" data-field="{{ id }}" data-type="{{ field.type }}" href="#">Upload {{ field.type | capitalize }}</a> |
-					<a class="remove-custom-img" data-field="{{ id }}" href="#">Remove {{ field.type | capitalize }}</a>
-				</p>
-			</td>
+			<p class="hide-if-no-js">
+				<a class="upload-custom-img" data-field="{{ id }}" data-type="{{ field.type }}" href="#">Upload {{ field.type | capitalize }}</a> |
+				<a class="remove-custom-img" data-field="{{ id }}" href="#">Remove {{ field.type | capitalize }}</a>
+			</p>
 			{% elseif field.type is defined %}
 			<input class="widefat" id="{{ id }}" name="custom_field[{{ id }}]" type="{{ field.type }}" value="{{ field.value }}" />
 			{% else %}
