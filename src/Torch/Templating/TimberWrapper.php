@@ -4,7 +4,7 @@ namespace Torch\Templating;
 use \Timber;
 use \Torch\Wordpress\AdminNotice;
 
-if ( !class_exists( "TimberWrapper" ) ):
+if ( !class_exists( __NAMESPACE__."\\TimberWrapper" ) ):
 class TimberWrapper implements Renderer
 {
 	private $context = null;
